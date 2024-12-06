@@ -1,20 +1,20 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import reverse from '../src/index.js';
+import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+import reverse from '../src/index.js';
+
+const getFixturePath = (filename) =>
+  path.join(__dirname, '..', '__fixtures__', filename);
+const readFixtureFile = (filename) =>
+  fs.readFileSync(getFixturePath(filename), 'utf-8');
+
 test('reverse', () => {
-  const text = fs.readFileSync(
-    `${__dirname}/../__fixtures__/longText.txt`,
-    'utf-8',
-  );
-  const resultText = fs.readFileSync(
-    `${__dirname}/../__fixtures__/resultText.txt`,
-    'utf-8',
-  );
-  const result = reverse(text);
-  expect(result).toEqual(resultText);
+  const text = readFixtureFile(longText.txt);
+  const resultText = readFixtureFile(resultText.txt);
+
+  expect(reverse(text)).toEqual(resultText);
 });
